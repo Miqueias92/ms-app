@@ -1,5 +1,6 @@
 package com.example.mscandidate.repository.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,9 +20,13 @@ public class CandidateRepositoryImpl implements CandidateRepository {
 
 	@Override
 	public List<Candidate> findAll(int fromAge, int toAge) {
-		return DatabaseMemory
+		
+		List<Candidate> candidates = DatabaseMemory
 				.CandadatesList
 				.stream().filter( c -> c.getAge() >= fromAge && c.getAge() <= toAge)
 				.collect(Collectors.toList());
+		
+		Collections.sort(candidates, (c1, c2) -> c1.getAge() - c2.getAge());
+		return candidates;
 	}
 }
